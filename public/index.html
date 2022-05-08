@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./css/style.css" />
+    <title>Super 6 Tracker</title>
+  </head>
+  <body>
+    <div id="header">
+      <div id="logo"><img src="./assets/gd2.svg" alt="grenada" /></div>
+      <div><h1>Super 6 Tracker</h1></div>
+      <div id="refresh-btn">
+        <img src="./assets/redo-alt.svg" alt="Reload" />
+      </div>
+    </div>
+
+    <section id="info-wrapper">
+      <article class="info-cont">
+        <h2>
+          Count
+          <br />
+          <span>Threshold</span>
+          <br />
+          <span>5 </span
+          ><input
+            type="range"
+            name="count-range"
+            min="5"
+            max="20"
+            value="3"
+            id="count-slider"
+          /><span> 20</span>
+        </h2>
+        <div id="count">
+          <p>01: <span>00</span></p>
+          <p>02: <span>00</span></p>
+          <p>03: <span>00</span></p>
+          <p>04: <span>00</span></p>
+          <p>05: <span>00</span></p>
+          <p>06: <span>00</span></p>
+          <p>07: <span>00</span></p>
+          <p>08: <span>00</span></p>
+          <p>09: <span>00</span></p>
+          <p>10: <span>00</span></p>
+          <p>11: <span>00</span></p>
+          <p>12: <span>00</span></p>
+          <p>13: <span>00</span></p>
+          <p>14: <span>00</span></p>
+          <p>15: <span>00</span></p>
+          <p>16: <span>00</span></p>
+          <p>17: <span>00</span></p>
+          <p>18: <span>00</span></p>
+          <p>19: <span>00</span></p>
+          <p>20: <span>00</span></p>
+          <p>21: <span>00</span></p>
+          <p>22: <span>00</span></p>
+          <p>23: <span>00</span></p>
+          <p>24: <span>00</span></p>
+          <p>25: <span>00</span></p>
+          <p>26: <span>00</span></p>
+          <p>27: <span>00</span></p>
+          <p>28: <span>00</span></p>
+        </div>
+      </article>
+      <article class="info-cont">
+        <div id="freq-cont">
+          <h2>
+            Frequency
+            <br />
+            <span>Threshold</span>
+            <br />
+            <span>5 </span
+            ><input
+              type="range"
+              name="freq-range"
+              min="5"
+              max="20"
+              value="3"
+              id="freq-slider"
+            /><span> 20</span>
+          </h2>
+          <h3>High Freq Numbers</h3>
+          <div id="high-freq">
+            <p>First: <span></span></p>
+            <p>Second: <span></span></p>
+            <p>Third: <span></span></p>
+            <p>Fourth: <span></span></p>
+            <p>Fifth: <span></span></p>
+            <p>Sixth: <span></span></p>
+          </div>
+          <h3>Low Freq Numbers</h3>
+          <div id="low-freq">
+            <p>First: <span></span></p>
+            <p>Second: <span></span></p>
+            <p>Third: <span></span></p>
+            <p>Fourth: <span></span></p>
+            <p>Fifth: <span></span></p>
+            <p>Sixth: <span></span></p>
+          </div>
+        </div>
+      </article>
+      <article class="info-cont">
+        <h2>Recommendations</h2>
+        <p>##,##,##,##,##,## #</p>
+        <p>##,##,##,##,##,## #</p>
+        <p>##,##,##,##,##,## #</p>
+        <p>##,##,##,##,##,## #</p>
+        <p>##,##,##,##,##,## #</p>
+        <p>##,##,##,##,##,## #</p>
+      </article>
+    </section>
+    <script src="./app.js"></script>
+  </body>
+</html>

@@ -1,1 +1,1 @@
-# super-6-tracker
+"# LottoScraper"
