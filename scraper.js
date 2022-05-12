@@ -1,6 +1,5 @@
-const drawData = [];
 // My First Node.js server with Express & NEDB!
-
+const drawData = [];
 const express = require("express");
 const puppeteer = require("puppeteer");
 const cors = require("cors");
@@ -15,13 +14,11 @@ app.use(cors());
 app.get("/api", async (req, res) => {
   try {
     // Scrape the NLA Super 6 data (Timed)
-    console.time("scrapeTime");
     const browser = await puppeteer.launch({ args: ["--no-sandbox"] });
     const page = await browser.newPage();
     await page.goto("https://www.nla.gd/wp-json/wp/v2/pages/549");
     const el = await page.$eval("pre", (element) => element.textContent);
     browser.close();
-    console.timeEnd("scrapeTime");
     formatRawNLAData(el);
     addDrawToDb();
     allDbDrawNumbers(res);
@@ -59,7 +56,7 @@ const formatRawNLAData = (el) => {
     nS2 = 20,
     lS2 = 21,
     iS2 = 25;
-  for (let i = 0; i < 26; i++) {
+  for (let i = 0; i < raw.length / 25; i++) {
     const drawDate = raw.slice(dS1, dS2);
     const drawNums = raw.slice(dS2, nS2).match(/.{1,2}/g);
     const drawLtr = raw.slice(nS2, lS2);
