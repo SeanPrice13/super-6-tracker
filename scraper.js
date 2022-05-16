@@ -13,7 +13,7 @@ app.use(cors());
 
 app.get("/api", async (req, res) => {
   try {
-    // Scrape the NLA Super 6 data (Timed)
+    // Scrape the NLA Super 6 data.
     const browser = await puppeteer.launch({ args: ["--no-sandbox"] });
     const page = await browser.newPage();
     await page.goto("https://www.nla.gd/wp-json/wp/v2/pages/549");
@@ -43,14 +43,7 @@ app.listen(process.env.PORT || 5000, () => {
 
 const formatRawNLAData = (el) => {
   // Format the scraped data for use.
-  const raw = JSON.parse(el)
-    .content.rendered.slice(
-      JSON.parse(el).content.rendered.indexOf("<table><thead>")
-    )
-    .toString()
-    .replace(/(<([^>]+)>)/gi, "")
-    .replace("DateWinning#LetterDraw ID", "")
-    .replace(/[,-\s]/g, "");
+  const raw = JSON.parse(el).content.rendered.slice(JSON.parse(el).content.rendered.indexOf("<table><thead>")).toString().replace(/(<([^>]+)>)/gi, "").replace("DateWinning#LetterDraw ID", "").replace(/[,-\s]/g, "");
   let dS1 = 0,
     dS2 = 8,
     nS2 = 20,
@@ -83,15 +76,9 @@ const addDrawToDb = () => {
       if (err) {
         console.log(err);
       }
-      if (output !== null) {
-        if (output.key == iD) {
-          console.log("EXISTS!", iD);
-        }
-      } else {
-        console.log(output, iD);
-        database.insert(drawData[j]);
-        console.log("ADDED!", iD);
-      }
+      output !== null ? 
+      (output.key == iD ? console.log("EXISTS!", iD) : console.log()) : 
+      (console.log(output, iD), database.insert(drawData[j]), console.log("ADDED!", iD));
     });
   }
 };
