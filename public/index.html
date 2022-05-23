@@ -9,29 +9,26 @@
   </head>
   <body>
     <div id="header">
-      <div id="logo"><img src="./assets/gd2.svg" alt="grenada" /></div>
-      <div><h1>Super 6 Tracker</h1></div>
-      <div id="refresh-btn">
-        <img src="./assets/redo-alt.svg" alt="Reload" />
+      <div id="logo"><img src="./assets/gd2.svg" alt="grenada flag" /></div>
+      <div><h1 id="title">Super 6 Tracker</h1></div>
+      <div id="refresh-db-btn">
+        <img src="./assets/redo-alt.svg" alt="refresh database" />
       </div>
     </div>
-
     <section id="info-wrapper">
       <article class="info-cont">
         <h2>
           Count
           <br />
+          <span>From: </span><input type="date" min="2022-02-08" value="2022-02-08" name="start-date" id="start-date">
+          <span>To: </span><input type="date" min="2022-02-08" name="end-date" id="end-date">
+          <br />
           <span>Threshold</span>
           <br />
-          <span>5 </span
-          ><input
-            type="range"
-            name="count-range"
-            min="5"
-            max="20"
-            value="5"
-            id="count-slider"
-          /><span> 20</span>
+          <span>1 </span>
+          <input type="range" name="count-range" min="1" max="20" value="5" id="count-slider"/>
+          <span> 20</span>
+          <br />
         </h2>
         <div id="count">
           <p>01: <span>0 times</span></p>
@@ -79,6 +76,6 @@
         </div>
       </article>
     </section>
-    <script src="./app.js"></script>
+    <script type="module" src="./app.js" /></script>
   </body>
 </html>

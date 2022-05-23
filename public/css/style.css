@@ -35,7 +35,7 @@
   margin: 0.5em;
 }
 
-* body #header #refresh-btn {
+* body #header #refresh-db-btn {
   background: lightgray;
   border-radius: 25%;
   padding: 0.5em;
@@ -43,30 +43,30 @@
   height: 2.5em;
 }
 
-* body #header #refresh-btn img {
+* body #header #refresh-db-btn img {
   width: 1.5em;
   -webkit-filter: invert(44%) sepia(97%) saturate(3%) hue-rotate(2deg) brightness(101%) contrast(99%);
           filter: invert(44%) sepia(97%) saturate(3%) hue-rotate(2deg) brightness(101%) contrast(99%);
 }
 
-* body #header #refresh-btn:hover,
-* body #header #refresh-btn:focus {
+* body #header #refresh-db-btn:hover,
+* body #header #refresh-db-btn:focus {
   -webkit-transform: translateY(-0.25em);
           transform: translateY(-0.25em);
 }
 
-* body #header #refresh-btn:hover img,
-* body #header #refresh-btn:focus img {
+* body #header #refresh-db-btn:hover img,
+* body #header #refresh-db-btn:focus img {
   -webkit-filter: invert(100%) sepia(0%) saturate(7479%) hue-rotate(135deg) brightness(107%) contrast(106%);
           filter: invert(100%) sepia(0%) saturate(7479%) hue-rotate(135deg) brightness(107%) contrast(106%);
 }
 
-* body #header #refresh-btn:active {
+* body #header #refresh-db-btn:active {
   -webkit-transform: translateY(0.12em);
           transform: translateY(0.12em);
 }
 
-* body #header #refresh-btn:active img {
+* body #header #refresh-db-btn:active img {
   -webkit-filter: invert(64%) sepia(0%) saturate(2030%) hue-rotate(3deg) brightness(110%) contrast(80%);
           filter: invert(64%) sepia(0%) saturate(2030%) hue-rotate(3deg) brightness(110%) contrast(80%);
 }
@@ -74,6 +74,18 @@
 * body #info-wrapper .info-cont > h2 > span,
 * body #info-wrapper #freq-cont > h2 > span {
   font-size: small;
+}
+
+* body #info-wrapper .info-cont > h2 > input[type="date"] {
+  background: transparent;
+  color: white;
+  border: none;
+  text-align: center;
+}
+
+* body #info-wrapper .info-cont > h2 > input[type="date"]::-webkit-calendar-picker-indicator {
+  -webkit-filter: invert(100%);
+          filter: invert(100%);
 }
 
 * body #info-wrapper #count {
