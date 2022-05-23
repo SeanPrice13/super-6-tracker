@@ -79,7 +79,7 @@ function addDrawToDb(drawArr) {
       if (err) console.log(err);
       output !== null ?
         (output.key == iD ? console.log("EXISTS!", iD) : console.log()) :
-        (console.log(output, iD), database.insert(drawData[i]), console.log("ADDED!", iD));
+        (console.log(output, iD), database.insert(drawArr[i]), console.log("ADDED!", iD));
     });
   }
 };
