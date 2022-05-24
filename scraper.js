@@ -25,18 +25,6 @@ app.get("/scrape", async (req, res) => {
   }
 });
 
-// Send all database draw data to the user.
-app.get("/api", async (req, res) => {
-  try {
-    database.find({}, (err, result) => {
-      if (err) console.log(err);
-      res.json(result);
-    });
-  } catch (e) {
-    res.status(500).send(e);
-  }
-});
-
 // Pull draws within requested date from database & send to client.
 app.post('/api', (req, res) => {
   const draws = [];
