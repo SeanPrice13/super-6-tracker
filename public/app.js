@@ -19,6 +19,7 @@ async function filterDatabase(fromDate, toDate) {
   dateRange(data);
 }
 
+// Extract draw numbers and add to a new array for counting.
 function dateRange(db) {
   const dateRangeArr = [];
   for (let i = 0; i < db.length; i++) {
@@ -85,13 +86,6 @@ function recomGen(filteredArray) {
   }
 }
 
-setTimeout(() => {
-  filterDatabase(
-    startDate.value.replace(/-/g, ""),
-    endDate.value.replace(/-/g, "")
-  );
-}, 3000);
-
 /***************************************Event Listeners***************************************/
 // Count Threshold, Date Range Event Listeners in a for loop
 [countSlider, startDate, endDate].forEach((item) => {
@@ -114,3 +108,8 @@ document.getElementById("refresh-db-btn").addEventListener("click", () => {
 });
 
 /***************************************Test Code***************************************/
+// Get draws from 02/08/2022 to current date on page load.
+filterDatabase(
+  startDate.value.replace(/-/g, ""),
+  endDate.value.replace(/-/g, "")
+);
