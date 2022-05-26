@@ -98,14 +98,12 @@ function recomGen(filteredArray) {
 });
 
 // Refresh Button Event Listener
-document.getElementById("refresh-db-btn").addEventListener("click", () => {
-  document.getElementById("title").textContent = "Updating Database.";
-  fetch("/scrape")
-    .then((response) => response.json())
-    .then((data) => {
-      document.getElementById("title").textContent = data;
-    });
+// document.getElementById("refresh-db-btn").addEventListener("click", () => {
+//   document.getElementById("title").textContent = "Updating Database.";
+fetch("/scrape").then((response) => response.json()).then((data) => {
+  document.getElementById("title").textContent = data;
 });
+// });
 
 /***************************************Test Code***************************************/
 // Get draws from 02/08/2022 to current date on page load.
