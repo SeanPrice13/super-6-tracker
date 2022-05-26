@@ -1,10 +1,11 @@
 // My First Node.js server with Express & NEDB!
+  const drawData = [];
 const express = require("express");
 const puppeteer = require("puppeteer");
 const cors = require("cors");
 const app = express();
 const Datastore = require("nedb");
-const database = new Datastore({ filename: "database.db", autoload: true });
+const database = new Datastore({ filename: "./database.db", autoload: true });
 
 app.use(express.static("public"));
 app.use(express.json({ limit: "1mb" }));
@@ -45,7 +46,6 @@ app.listen(process.env.PORT || 5000, () => {
 /***************************************FUNCTIONS***************************************/
 // Format the scraped data into individual draws and push to drawData array.
 function formatRawNLAData(rawScrapedData) {
-  const drawData = [];
   const rawFilteredData = JSON.parse(rawScrapedData).content.rendered.slice(JSON.parse(rawScrapedData).content.rendered.indexOf("<table><thead>")).toString().replace(/(<([^>]+)>)/gi, "").replace("DateWinning#LetterDraw ID", "").replace(/[,-\s]/g, "");
   let dS1 = 0, dS2 = 8, nS2 = 20, lS2 = 21, iS2 = 25;
   for (let i = 0; i < rawFilteredData.length / 25; i++) {
