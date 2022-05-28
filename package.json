@@ -11,8 +11,9 @@
   "license": "ISC",
   "dependencies": {
     "cors": "^2.8.5",
+    "dotenv": "^16.0.1",
     "express": "^4.17.2",
-    "nedb": "^1.8.0",
+    "mongoose": "^6.3.4",
     "puppeteer": "^13.0.1"
   }
 }

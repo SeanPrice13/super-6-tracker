@@ -1,22 +1,26 @@
-// My First Node.js server with Express & NEDB!
-  const drawData = [];
+// My First Node.js server with Express & MongoDB!(Mongoose)
+require('dotenv').config();
 const express = require("express");
+const app = express();
 const puppeteer = require("puppeteer");
 const cors = require("cors");
-const app = express();
-const Datastore = require("nedb");
-const database = new Datastore({ filename: "./database.db", autoload: true });
+const mongoose = require('mongoose');
+const Draw = require('./models/draw');
 
+// Connect to MongoDB database using mongoose. 
+mongoose.connect(process.env.DATABASE_URL).then((result) => app.listen(process.env.PORT || 5000, () => { console.log("DB Running on port 5000.") })).catch((err) => console.log(err));
+
+// Middleware
 app.use(express.static("public"));
 app.use(express.json({ limit: "1mb" }));
 app.use(cors());
 
-// Scrape the NLA Super 6 data and add to database.
+// Scrape the NLA Super 6 data and format the data to pass to database.
 app.get("/scrape", async (req, res) => {
   try {
     const browser = await puppeteer.launch({ args: ["--no-sandbox"] });
     const page = await browser.newPage();
-    await page.goto("https://www.nla.gd/wp-json/wp/v2/pages/549");
+    await page.goto(process.env.NLA_SUPER6);
     const el = await page.$eval("pre", (element) => element.textContent);
     browser.close();
     formatRawNLAData(el);
@@ -28,24 +32,16 @@ app.get("/scrape", async (req, res) => {
 
 // Pull draws within requested date from database & send to client.
 app.post('/api', (req, res) => {
-  const draws = [];
-  database.find({$and: [{date: {$gte: req.body.fromDate}}, {date: {$lte: req.body.toDate}}]}, (err, result) => {
+  Draw.find({$and: [{date: {$gte: req.body.fromDate}}, {date: {$lte: req.body.toDate}}]}, (err, result) => {
     if (err) console.log(err);
-    for (let i = 0; i < result.length; i++) {
-      const draw = result[i];
-      draws.push(draw);
-    }
-    res.json(draws);
+    res.json(result);
   });
-});
-
-app.listen(process.env.PORT || 5000, () => {
-  console.log("Running on port 5000.");
 });
 
 /***************************************FUNCTIONS***************************************/
 // Format the scraped data into individual draws and push to drawData array.
 function formatRawNLAData(rawScrapedData) {
+  const drawData = [];
   const rawFilteredData = JSON.parse(rawScrapedData).content.rendered.slice(JSON.parse(rawScrapedData).content.rendered.indexOf("<table><thead>")).toString().replace(/(<([^>]+)>)/gi, "").replace("DateWinning#LetterDraw ID", "").replace(/[,-\s]/g, "");
   let dS1 = 0, dS2 = 8, nS2 = 20, lS2 = 21, iS2 = 25;
   for (let i = 0; i < rawFilteredData.length / 25; i++) {
@@ -63,11 +59,11 @@ function formatRawNLAData(rawScrapedData) {
 function addDrawToDb(drawArr) {
   for (let i = 0; i < drawArr.length; i++) {
     const iD = drawArr[i].key;
-    database.findOne({ key: iD }, (err, output) => {
+    Draw.findOne({ key: iD }, (err, output) => {
       if (err) console.log(err);
       output !== null ?
         (output.key == iD ? console.log("EXISTS!", iD) : console.log()) :
-        (console.log(output, iD), database.insert(drawArr[i]), console.log("ADDED!", iD));
+        (console.log(output, iD), Draw.create(drawArr[i]), console.log("ADDED!", iD));
     });
   }
 };
