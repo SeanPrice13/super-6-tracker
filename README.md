@@ -1,11 +1,13 @@
-# Super 6 Scraper, Database & Server
+# Super 6 Scraper, Database & Server 
 
-Node modules and libraries used: 
+Built with:
 
-Express(Server)
+MongoDB(Database) w/ mongoose
 
-NeDB(Database)
+Express
 
 Puppeteer(Scraper)
+
+NodeJS
 
 [Try it out!](https://super-6-tracker.herokuapp.com/)
