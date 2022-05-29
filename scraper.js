@@ -24,7 +24,7 @@ app.get("/scrape", async (req, res) => {
     const el = await page.$eval("pre", (element) => element.textContent);
     browser.close();
     formatRawNLAData(el);
-    res.json('Done. Refresh Page.');
+    res.json('Task Completed.');
   } catch (e) {
     res.status(500).send(e);
   }

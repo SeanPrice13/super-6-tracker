@@ -102,8 +102,11 @@ document.getElementById("refresh-db-btn").addEventListener("click", () => {
   document.getElementById("title").textContent = "Scraping NLA...";
   fetch("/scrape").then((response) => response.json()).then((data) => {
     document.getElementById("title").textContent = data;
-    // filterDatabase(startDate.value.replace(/-/g, ""), endDate.value.replace(/-/g, ""));
+    filterDatabase(startDate.value.replace(/-/g, ""), endDate.value.replace(/-/g, ""));
   });
+  setTimeout(() => {
+    document.getElementById("title").textContent = 'Super 6 Tracker';
+  }, 1000);
 });
 
 /***************************************Test Code***************************************/
