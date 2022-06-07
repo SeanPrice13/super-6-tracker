@@ -6,6 +6,7 @@ const puppeteer = require("puppeteer");
 const cors = require("cors");
 const mongoose = require('mongoose');
 const Draw = require('./models/draw');
+const Combination = require('./models/combination');
 
 // Connect to MongoDB database using mongoose. 
 mongoose.connect(process.env.DATABASE_URL).then((result) => app.listen(process.env.PORT || 5000, () => { console.log("DB Running on port 5000.") })).catch((err) => console.log(err));
@@ -23,8 +24,26 @@ app.get("/scrape", async (req, res) => {
     await page.goto(process.env.NLA_SUPER6);
     const el = await page.$eval("pre", (element) => element.textContent);
     browser.close();
-    formatRawNLAData(el);
-    res.json('Task Completed.');
+    // Format the scraped data into individual draws and push to scrapedDraws array.
+    const scrapedDraws = [];
+    const rawFilteredData = JSON.parse(el).content.rendered.slice(JSON.parse(el).content.rendered.indexOf("<table><thead>")).toString().replace(/(<([^>]+)>)/gi, "").replace("DateWinning#LetterDraw ID", "").replace(/[,-\s]/g, "").match(/.{1,25}/g);
+    rawFilteredData.map((drawRow) => {
+      scrapedDraws.push({
+        date: drawRow.slice(0, 8),
+        draw: drawRow.slice(8, 20).match(/.{1,2}/g),
+        letter: drawRow.slice(20, 21),
+        key: drawRow.slice(21, 25),
+      });
+    });
+    // Check database for each recent draw & add to database if not found.
+    scrapedDraws.map((scrapedDraw) => {
+      Draw.findOne({ key: scrapedDraw.key }, (err, output) => {
+        output !== null ?
+          (output.key == scrapedDraw.key ? console.log("EXISTS!", scrapedDraw.key) : console.log()) :
+          (console.log(output, scrapedDraw.key), Draw.create(scrapedDraws), console.log("ADDED!", scrapedDraw.key));
+      });
+    });
+    res.json("Task Completed.");
   } catch (e) {
     res.status(500).send(e);
   }
@@ -33,37 +52,18 @@ app.get("/scrape", async (req, res) => {
 // Pull draws within requested date from database & send to client.
 app.post('/api', (req, res) => {
   Draw.find({$and: [{date: {$gte: req.body.fromDate}}, {date: {$lte: req.body.toDate}}]}, (err, result) => {
-    if (err) console.log(err);
     res.json(result);
   });
 });
 
-/***************************************FUNCTIONS***************************************/
-// Format the scraped data into individual draws and push to drawData array.
-function formatRawNLAData(rawScrapedData) {
-  const drawData = [];
-  const rawFilteredData = JSON.parse(rawScrapedData).content.rendered.slice(JSON.parse(rawScrapedData).content.rendered.indexOf("<table><thead>")).toString().replace(/(<([^>]+)>)/gi, "").replace("DateWinning#LetterDraw ID", "").replace(/[,-\s]/g, "");
-  let dS1 = 0, dS2 = 8, nS2 = 20, lS2 = 21, iS2 = 25;
-  for (let i = 0; i < rawFilteredData.length / 25; i++) {
-    drawData.push({date: rawFilteredData.slice(dS1, dS2), draw: rawFilteredData.slice(dS2, nS2).match(/.{1,2}/g), letter: rawFilteredData.slice(nS2, lS2), key: rawFilteredData.slice(lS2, iS2)});
-    dS1 += 25;
-    dS2 += 25;
-    nS2 += 25;
-    lS2 += 25;
-    iS2 += 25;
+// Pull combinations from database & send to client.
+app.post('/api/combos', async (req, res) => {
+  const recom = [];
+  result = Combination.aggregate([{$match: {combo: {$all: req.body.aThreshold}}}, {$sample: {size: 15}},]);
+  for await (const doc of result) {
+  recom.push(doc.combo);
   }
-  addDrawToDb(drawData);
-};
+  res.json(recom);
+});
 
-// Check database for each recent draw & add to database if not found.
-function addDrawToDb(drawArr) {
-  for (let i = 0; i < drawArr.length; i++) {
-    const iD = drawArr[i].key;
-    Draw.findOne({ key: iD }, (err, output) => {
-      if (err) console.log(err);
-      output !== null ?
-        (output.key == iD ? console.log("EXISTS!", iD) : console.log()) :
-        (console.log(output, iD), Draw.create(drawArr[i]), console.log("ADDED!", iD));
-    });
-  }
-};
+/***************************************TEST CODE***************************************/

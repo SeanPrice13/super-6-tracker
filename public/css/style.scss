@@ -79,6 +79,13 @@
                     }
                 }
             }
+            #recom {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                grid-template-rows: repeat(5, 1fr);
+                grid-column-gap: 1px;
+                grid-row-gap: 1px;
+            }
             .info-cont {
                 h2,
                 h3,
