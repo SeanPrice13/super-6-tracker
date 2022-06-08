@@ -8,6 +8,7 @@
     body {
         background: black;
         color: white;
+        // min-height: 100vh;
         #header {
             display: flex;
             justify-content: space-evenly;
@@ -63,7 +64,7 @@
                 grid-template-columns: repeat(4, 1fr);
                 grid-template-rows: repeat(7, 1fr);
                 grid-column-gap: 1px;
-                grid-row-gap: 1px;
+                grid-row-gap: 2em;
                 user-select: none;
                 .high-count {
                     color: darkgreen;
@@ -85,23 +86,23 @@
                 }
                 h2 {
                     border: 2px solid lightgray;
-                }
-                p {
-                    font-size: clamp(0.5rem, 0.75rem, 1rem);
-                    margin: 1rem;
+                    user-select: none;
                 }
             }
         }
     }
 }
 
-@media only screen and (min-width: 720px) {
+@media only screen and (min-width: 721px) {
     #info-wrapper {
         display: flex;
         justify-content: space-evenly;
         .info-cont {
             width: 50%;
             margin: 0.1em;
+            p {
+                font-size: small;
+            }
         }
     }
     #recom {
@@ -109,7 +110,7 @@
         grid-template-columns: repeat(3, 1fr);
         grid-template-rows: repeat(7, 1fr);
         grid-column-gap: 1px;
-        grid-row-gap: 1px;
+        grid-row-gap: 2em;
     }
 }
 
@@ -119,6 +120,9 @@
         grid-template-columns: repeat(2, 1fr);
         grid-template-rows: repeat(11, 1fr);
         grid-column-gap: 1px;
-        grid-row-gap: 1px;
+        grid-row-gap: 2em;
+    }
+    p {
+        font-size: smaller;
     }
 }

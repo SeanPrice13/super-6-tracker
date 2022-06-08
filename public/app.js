@@ -2,46 +2,12 @@ const countSlider = document.getElementById("count-slider"),
   aDate = document.getElementById("start-date"),
   bDate = document.getElementById("end-date"),
   recomArr = document.getElementById("recom").querySelectorAll("p");
-bDate.value = new Date().toISOString().slice(0, 10);
+
 // Get draws from 02/08/2022 to current date on page load.
+bDate.value = new Date().toISOString().slice(0, 10);
 filterDatabase(aDate.value.replace(/-/g, ""), bDate.value.replace(/-/g, ""));
 
 /***************************************FUNCTIONS***************************************/
-// Fetch draws within the specified range from the database.
-async function filterDatabase(fromDate, toDate) {
-  const options = {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ fromDate, toDate }),
-  };
-  const response = await fetch("/api", options);
-  const data = await response.json();
-  dateRange(data);
-};
-
-async function findCombinations(aThreshold, bThreshold) {
-  if (aThreshold.length !== 0) {
-    const options = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ aThreshold }),
-    };
-    const response = await fetch("/api/combos", options);
-    const data = await response.json();
-    [...recomArr].map((el, i) => {
-      (el.innerText = ""), el.append(data[i]);
-    });
-  } else {
-    [...recomArr].map((el) => {
-      (el.innerText = ""), (el.innerText = "00,00,00,00,00,00");
-    });
-  }
-}
-
 // Extract draw numbers and add to a new array for counting.
 function dateRange(db) {
   const dateRangeArr = [];
@@ -70,7 +36,7 @@ function countNum(numArr) {
   filterByFreq(num, numCount, countThreshold);
 }
 
-// Filter numbers to filteredList if number count is above threshold.
+// Filter numbers based on count threshold.
 function filterByFreq(unfilteredArr, unfilteredCount, threshold) {
   const aboveThreshold = [],
     belowThreshold = [];
@@ -84,14 +50,46 @@ function filterByFreq(unfilteredArr, unfilteredCount, threshold) {
 
 // Display suggested draws based on threshold.
 function recomGen(aboveArray, belowArray) {
-  aboveArray.length > 5 ? ([...recomArr].map((el, i) => {
+  aboveArray.length == 0 ? [...recomArr].map((el) => {
+      el.innerText = "", el.innerText = "00,00,00,00,00,00";
+    }) 
+  : aboveArray.length > 5 ? ([...recomArr].map((el) => {
     el.innerText = '';
     el.append(aboveArray.sort(() => Math.random() - Math.random()).slice(0, 6).sort())})) 
   : findCombinations(aboveArray, belowArray)
 }
 
+// Fetch draws within the specified range from the database.
+async function filterDatabase(fromDate, toDate) {
+  const options = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ fromDate, toDate }),
+  };
+  const response = await fetch("/api", options);
+  const data = await response.json();
+  dateRange(data);
+}(aDate.value.replace(/-/g, ""), bDate.value.replace(/-/g, ""));
+
+async function findCombinations(aThreshold, bThreshold) {
+  const options = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ aThreshold }),
+  };
+  const response = await fetch("/api/combos", options);
+  const data = await response.json();
+  [...recomArr].map((el, i) => {
+    (el.innerText = ""), el.append(data[i]);
+  });
+}
+
 /***************************************Event Listeners***************************************/
-// Count Threshold, Date Range Event Listeners in a for loop
+// Count Threshold Slider & Date Range Event Listeners
 [countSlider, aDate, bDate].forEach((item) => {
   item.addEventListener("change", () => {
     filterDatabase(aDate.value.replace(/-/g, ""), bDate.value.replace(/-/g, ""));
@@ -101,11 +99,11 @@ function recomGen(aboveArray, belowArray) {
 // Refresh Button Event Listener
 document.getElementById("refresh-db-btn").addEventListener("click", () => {
   const title = document.getElementById("title");
-  title.textContent = "Scraping NLA...";
+  title.textContent = "Scraping...";
   fetch("/scrape").then((res) => res.json()).then((data) => {
     title.textContent = data;
-    filterDatabase(aDate.value.replace(/-/g, ""), bDate.value.replace(/-/g, ""));
   });
-  setTimeout(() => {title.textContent = "Super 6 Tracker"}, 10000)});
+  setTimeout(() => {title.textContent = "Super 6 Tracker"}, 7000)
+});
 
 /***************************************Test Code***************************************/
