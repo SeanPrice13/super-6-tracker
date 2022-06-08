@@ -22,18 +22,24 @@ async function filterDatabase(fromDate, toDate) {
 };
 
 async function findCombinations(aThreshold, bThreshold) {
-  const options = {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ aThreshold }),
-  };
-  const response = await fetch("/api/combos", options);
-  const data = await response.json();
-  [...recomArr].map((el, i) => {
-    (el.innerText = ""), el.append(data[i]);
-  });
+  if (aThreshold.length !== 0) {
+    const options = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ aThreshold }),
+    };
+    const response = await fetch("/api/combos", options);
+    const data = await response.json();
+    [...recomArr].map((el, i) => {
+      (el.innerText = ""), el.append(data[i]);
+    });
+  } else {
+    [...recomArr].map((el) => {
+      (el.innerText = ""), (el.innerText = "00,00,00,00,00,00");
+    });
+  }
 }
 
 // Extract draw numbers and add to a new array for counting.
@@ -80,8 +86,8 @@ function filterByFreq(unfilteredArr, unfilteredCount, threshold) {
 function recomGen(aboveArray, belowArray) {
   aboveArray.length > 5 ? ([...recomArr].map((el, i) => {
     el.innerText = '';
-    el.append(aboveArray.sort(() => Math.random() - Math.random()).slice(0, 6).sort())
-  })) : findCombinations(aboveArray, belowArray)
+    el.append(aboveArray.sort(() => Math.random() - Math.random()).slice(0, 6).sort())})) 
+  : findCombinations(aboveArray, belowArray)
 }
 
 /***************************************Event Listeners***************************************/

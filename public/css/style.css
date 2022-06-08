@@ -19,7 +19,6 @@
   -webkit-box-pack: space-evenly;
       -ms-flex-pack: space-evenly;
           justify-content: space-evenly;
-  margin: 2em 0;
   -webkit-user-select: none;
      -moz-user-select: none;
       -ms-user-select: none;
@@ -71,8 +70,7 @@
           filter: invert(64%) sepia(0%) saturate(2030%) hue-rotate(3deg) brightness(110%) contrast(80%);
 }
 
-* body #info-wrapper .info-cont > h2 > span,
-* body #info-wrapper #freq-cont > h2 > span {
+* body #info-wrapper .info-cont > h2 > span {
   font-size: small;
 }
 
@@ -97,6 +95,10 @@
       grid-template-rows: repeat(7, 1fr);
   grid-column-gap: 1px;
   grid-row-gap: 1px;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
 }
 
 * body #info-wrapper #count .high-count {
@@ -115,31 +117,55 @@
   color: white;
 }
 
-* body #info-wrapper #recom {
-  display: -ms-grid;
-  display: grid;
-  -ms-grid-columns: (1fr)[3];
-      grid-template-columns: repeat(3, 1fr);
-  -ms-grid-rows: (1fr)[5];
-      grid-template-rows: repeat(5, 1fr);
-  grid-column-gap: 1px;
-  grid-row-gap: 1px;
-}
-
 * body #info-wrapper .info-cont h2,
-* body #info-wrapper .info-cont h3,
 * body #info-wrapper .info-cont p {
   text-align: center;
-  margin: 1em;
 }
 
 * body #info-wrapper .info-cont h2 {
   border: 2px solid lightgray;
-  margin: 0.5em;
 }
 
-* body #info-wrapper .info-cont h3 {
-  border: 1px solid lightgrey;
-  margin: 0 4em;
+* body #info-wrapper .info-cont p {
+  font-size: clamp(0.5rem, 0.75rem, 1rem);
+  margin: 1rem;
+}
+
+@media only screen and (min-width: 720px) {
+  #info-wrapper {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: space-evenly;
+        -ms-flex-pack: space-evenly;
+            justify-content: space-evenly;
+  }
+  #info-wrapper .info-cont {
+    width: 50%;
+    margin: 0.1em;
+  }
+  #recom {
+    display: -ms-grid;
+    display: grid;
+    -ms-grid-columns: (1fr)[3];
+        grid-template-columns: repeat(3, 1fr);
+    -ms-grid-rows: (1fr)[7];
+        grid-template-rows: repeat(7, 1fr);
+    grid-column-gap: 1px;
+    grid-row-gap: 1px;
+  }
+}
+
+@media only screen and (max-width: 720px) {
+  #recom {
+    display: -ms-grid;
+    display: grid;
+    -ms-grid-columns: (1fr)[2];
+        grid-template-columns: repeat(2, 1fr);
+    -ms-grid-rows: (1fr)[11];
+        grid-template-rows: repeat(11, 1fr);
+    grid-column-gap: 1px;
+    grid-row-gap: 1px;
+  }
 }
 /*# sourceMappingURL=style.css.map */

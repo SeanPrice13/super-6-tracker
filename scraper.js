@@ -40,7 +40,7 @@ app.get("/scrape", async (req, res) => {
       Draw.findOne({ key: scrapedDraw.key }, (err, output) => {
         output !== null ?
           (output.key == scrapedDraw.key ? console.log("EXISTS!", scrapedDraw.key) : console.log()) :
-          (console.log(output, scrapedDraw.key), Draw.create(scrapedDraws), console.log("ADDED!", scrapedDraw.key));
+          (console.log(output, scrapedDraw.key), Draw.create(scrapedDraw), console.log("ADDED!", scrapedDraw.key));
       });
     });
     res.json("Task Completed.");
@@ -59,11 +59,11 @@ app.post('/api', (req, res) => {
 // Pull combinations from database & send to client.
 app.post('/api/combos', async (req, res) => {
   const recom = [];
-  result = Combination.aggregate([{$match: {combo: {$all: req.body.aThreshold}}}, {$sample: {size: 15}},]);
+  result = Combination.aggregate([{$match: {combo: {$all: req.body.aThreshold}}}, {$sample: {size: 21}},]);
   for await (const doc of result) {
   recom.push(doc.combo);
   }
   res.json(recom);
 });
-
 /***************************************TEST CODE***************************************/
+// Nice 😏

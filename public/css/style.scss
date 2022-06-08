@@ -11,7 +11,6 @@
         #header {
             display: flex;
             justify-content: space-evenly;
-            margin: 2em 0;
             user-select: none;
             h1 {
                 text-align: center;
@@ -47,8 +46,7 @@
             }
         }
         #info-wrapper {
-            .info-cont>h2>span,
-            #freq-cont>h2>span {
+            .info-cont>h2>span{
                 font-size: small;
             }
             .info-cont>h2>input[type="date"] {
@@ -66,6 +64,7 @@
                 grid-template-rows: repeat(7, 1fr);
                 grid-column-gap: 1px;
                 grid-row-gap: 1px;
+                user-select: none;
                 .high-count {
                     color: darkgreen;
                     span {
@@ -79,29 +78,47 @@
                     }
                 }
             }
-            #recom {
-                display: grid;
-                grid-template-columns: repeat(3, 1fr);
-                grid-template-rows: repeat(5, 1fr);
-                grid-column-gap: 1px;
-                grid-row-gap: 1px;
-            }
             .info-cont {
                 h2,
-                h3,
                 p {
                     text-align: center;
-                    margin: 1em;
                 }
                 h2 {
                     border: 2px solid lightgray;
-                    margin: 0.5em;
                 }
-                h3 {
-                    border: 1px solid lightgrey;
-                    margin: 0 4em;
+                p {
+                    font-size: clamp(0.5rem, 0.75rem, 1rem);
+                    margin: 1rem;
                 }
             }
         }
+    }
+}
+
+@media only screen and (min-width: 720px) {
+    #info-wrapper {
+        display: flex;
+        justify-content: space-evenly;
+        .info-cont {
+            width: 50%;
+            margin: 0.1em;
+        }
+    }
+    #recom {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: repeat(7, 1fr);
+        grid-column-gap: 1px;
+        grid-row-gap: 1px;
+    }
+}
+
+@media only screen and (max-width: 720px) {
+    #recom {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(11, 1fr);
+        grid-column-gap: 1px;
+        grid-row-gap: 1px;
     }
 }
