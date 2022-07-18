@@ -1,129 +1,101 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap");
-* {
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
-  font-family: 'Poppins', cursive;
+  font-family: "Poppins", cursive;
 }
 
-* body {
+body {
   background: black;
   color: white;
 }
 
-* body #header {
-  display: -webkit-box;
-  display: -ms-flexbox;
+#header {
   display: flex;
-  -webkit-box-pack: space-evenly;
-      -ms-flex-pack: space-evenly;
-          justify-content: space-evenly;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
+  justify-content: space-evenly;
 }
-
-* body #header h1 {
+#header h1 {
   text-align: center;
 }
-
-* body #header #logo {
+#header #logo {
   width: 3em;
   margin: 0.5em;
 }
-
-* body #header #refresh-db-btn {
+#header #refresh-db-btn {
   background: lightgray;
   border-radius: 25%;
   padding: 0.5em;
   margin: 0.5em;
   height: 2.5em;
 }
-
-* body #header #refresh-db-btn img {
+#header #refresh-db-btn img {
   width: 1.5em;
-  -webkit-filter: invert(44%) sepia(97%) saturate(3%) hue-rotate(2deg) brightness(101%) contrast(99%);
-          filter: invert(44%) sepia(97%) saturate(3%) hue-rotate(2deg) brightness(101%) contrast(99%);
+  filter: invert(44%) sepia(97%) saturate(3%) hue-rotate(2deg) brightness(101%) contrast(99%);
+}
+#header #refresh-db-btn:hover, #header #refresh-db-btn:focus {
+  transform: translateY(-0.25em);
+}
+#header #refresh-db-btn:hover img, #header #refresh-db-btn:focus img {
+  filter: invert(100%) sepia(0%) saturate(7479%) hue-rotate(135deg) brightness(107%) contrast(106%);
+}
+#header #refresh-db-btn:active {
+  transform: translateY(0.12em);
+}
+#header #refresh-db-btn:active img {
+  filter: invert(64%) sepia(0%) saturate(2030%) hue-rotate(3deg) brightness(110%) contrast(80%);
 }
 
-* body #header #refresh-db-btn:hover,
-* body #header #refresh-db-btn:focus {
-  -webkit-transform: translateY(-0.25em);
-          transform: translateY(-0.25em);
+.info-cont h2 {
+  text-align: center;
+  border: 2px solid lightgray;
 }
-
-* body #header #refresh-db-btn:hover img,
-* body #header #refresh-db-btn:focus img {
-  -webkit-filter: invert(100%) sepia(0%) saturate(7479%) hue-rotate(135deg) brightness(107%) contrast(106%);
-          filter: invert(100%) sepia(0%) saturate(7479%) hue-rotate(135deg) brightness(107%) contrast(106%);
-}
-
-* body #header #refresh-db-btn:active {
-  -webkit-transform: translateY(0.12em);
-          transform: translateY(0.12em);
-}
-
-* body #header #refresh-db-btn:active img {
-  -webkit-filter: invert(64%) sepia(0%) saturate(2030%) hue-rotate(3deg) brightness(110%) contrast(80%);
-          filter: invert(64%) sepia(0%) saturate(2030%) hue-rotate(3deg) brightness(110%) contrast(80%);
-}
-
-* body #info-wrapper .info-cont > h2 > span {
+.info-cont h2 span {
   font-size: small;
 }
-
-* body #info-wrapper .info-cont > h2 > input[type="date"] {
+.info-cont h2 input[type=date] {
   background: transparent;
   color: white;
   border: none;
   text-align: center;
 }
-
-* body #info-wrapper .info-cont > h2 > input[type="date"]::-webkit-calendar-picker-indicator {
-  -webkit-filter: invert(100%);
-          filter: invert(100%);
+.info-cont h2 input[type=date]::-webkit-calendar-picker-indicator {
+  filter: invert(100%);
 }
 
-* body #info-wrapper #count {
-  display: -ms-grid;
+#count {
   display: grid;
-  -ms-grid-columns: (1fr)[4];
-      grid-template-columns: repeat(4, 1fr);
-  -ms-grid-rows: (1fr)[7];
-      grid-template-rows: repeat(7, 1fr);
+  place-items: center;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(7, 1fr);
   grid-column-gap: 1px;
   grid-row-gap: 2em;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
 }
-
-* body #info-wrapper #count .high-count {
+#count .high-count {
   color: darkgreen;
 }
-
-* body #info-wrapper #count .high-count span {
-  color: white;
-}
-
-* body #info-wrapper #count .low-count {
+#count .low-count {
   color: darkred;
 }
-
-* body #info-wrapper #count .low-count span {
+#count .faves {
+  color: gold;
+}
+#count p {
+  cursor: pointer;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+}
+#count span {
   color: white;
+  cursor: default;
 }
 
-* body #info-wrapper .info-cont h2,
-* body #info-wrapper .info-cont p {
-  text-align: center;
-}
-
-* body #info-wrapper .info-cont h2 {
-  border: 2px solid lightgray;
+#header,
+.info-cont > h2,
+#count {
   -webkit-user-select: none;
      -moz-user-select: none;
       -ms-user-select: none;
@@ -132,45 +104,34 @@
 
 @media only screen and (min-width: 721px) {
   #info-wrapper {
-    display: -webkit-box;
-    display: -ms-flexbox;
     display: flex;
-    -webkit-box-pack: space-evenly;
-        -ms-flex-pack: space-evenly;
-            justify-content: space-evenly;
+    justify-content: space-evenly;
   }
-  #info-wrapper .info-cont {
+  .info-cont {
     width: 50%;
     margin: 0.1em;
   }
-  #info-wrapper .info-cont p {
+  .info-cont p {
     font-size: small;
   }
   #recom {
-    display: -ms-grid;
     display: grid;
-    -ms-grid-columns: (1fr)[3];
-        grid-template-columns: repeat(3, 1fr);
-    -ms-grid-rows: (1fr)[7];
-        grid-template-rows: repeat(7, 1fr);
+    place-items: center;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(7, 1fr);
     grid-column-gap: 1px;
     grid-row-gap: 2em;
   }
 }
-
 @media only screen and (max-width: 720px) {
   #recom {
-    display: -ms-grid;
     display: grid;
-    -ms-grid-columns: (1fr)[2];
-        grid-template-columns: repeat(2, 1fr);
-    -ms-grid-rows: (1fr)[11];
-        grid-template-rows: repeat(11, 1fr);
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(11, 1fr);
     grid-column-gap: 1px;
     grid-row-gap: 2em;
   }
   p {
     font-size: smaller;
   }
-}
-/*# sourceMappingURL=style.css.map */
+}/*# sourceMappingURL=style.css.map */
