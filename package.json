@@ -4,7 +4,6 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "build": "yarn",
     "start": "node app.js"
   },
   "keywords": [],
