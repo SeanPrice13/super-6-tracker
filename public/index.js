@@ -50,13 +50,21 @@ function filterByFreq(unfilteredArr, unfilteredCount, threshold) {
 
 // Display suggested draws based on threshold.
 function recomGen(aboveArray, belowArray) {
-  aboveArray.length == 0 ? [...recomArr].map((el) => {
-      el.innerText = "", el.innerText = "00,00,00,00,00,00";
-    }) 
-  : aboveArray.length > 5 ? ([...recomArr].map((el) => {
-    el.innerText = '';
-    el.append(aboveArray.sort(() => Math.random() - Math.random()).slice(0, 6).sort())})) 
-  : findCombinations(aboveArray, belowArray)
+  aboveArray.length == 0
+    ? [...recomArr].map((el) => {
+        (el.innerText = ""), (el.innerText = "00,00,00,00,00,00");
+      })
+    : aboveArray.length > 5
+    ? [...recomArr].map((el) => {
+        el.innerText = "";
+        el.append(
+          aboveArray
+            .sort(() => Math.random() - Math.random())
+            .slice(0, 6)
+            .sort()
+        );
+      })
+    : findCombinations(aboveArray, belowArray);
 }
 
 // Fetch draws within the specified range from the database.
@@ -71,7 +79,8 @@ async function filterDatabase(fromDate, toDate) {
   const response = await fetch("/api", options);
   const data = await response.json();
   dateRange(data);
-}(aDate.value.replace(/-/g, ""), bDate.value.replace(/-/g, ""));
+}
+aDate.value.replace(/-/g, ""), bDate.value.replace(/-/g, "");
 
 async function findCombinations(aThreshold, bThreshold) {
   const options = {
@@ -92,18 +101,30 @@ async function findCombinations(aThreshold, bThreshold) {
 // Count Threshold Slider & Date Range Event Listeners
 [countSlider, aDate, bDate].forEach((item) => {
   item.addEventListener("change", () => {
-    filterDatabase(aDate.value.replace(/-/g, ""), bDate.value.replace(/-/g, ""));
+    filterDatabase(
+      aDate.value.replace(/-/g, ""),
+      bDate.value.replace(/-/g, "")
+    );
   });
+});
+
+// Refresh DB on page load.
+window.addEventListener("load", () => {
+  const title = document.getElementById("title");
+  title.textContent = "Scraping...";
+  fetch("/scrape")
+    .then((res) => res.json())
+    .then((data) => {
+      title.textContent = data;
+    });
+  setTimeout(() => {
+    title.textContent = "Super 6 Tracker";
+  }, 7000);
 });
 
 // Refresh Button Event Listener
 document.getElementById("refresh-db-btn").addEventListener("click", () => {
-  const title = document.getElementById("title");
-  title.textContent = "Scraping...";
-  fetch("/scrape").then((res) => res.json()).then((data) => {
-    title.textContent = data;
-  });
-  setTimeout(() => {title.textContent = "Super 6 Tracker"}, 7000)
+  location.reload();
 });
 
 /***************************************Test Code***************************************/

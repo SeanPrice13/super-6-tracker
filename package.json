@@ -2,9 +2,10 @@
   "name": "LottoTracker",
   "version": "1.0.0",
   "description": "",
-  "main": "scraper.js",
+  "main": "app.js",
   "scripts": {
-    "start": "node scraper.js"
+    "build": "yarn",
+    "start": "node app.js"
   },
   "keywords": [],
   "author": "",
