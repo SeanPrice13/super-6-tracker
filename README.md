@@ -10,4 +10,4 @@ Puppeteer(Scraper)
 
 NodeJS
 
-[Try it out!](https://super-6-tracker.herokuapp.com/)
+[Try it out!](https://super6.onrender.com)
