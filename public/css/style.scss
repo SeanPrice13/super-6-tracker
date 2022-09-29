@@ -1,30 +1,14 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap");
 
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+* {
   font-family: "Poppins", cursive;
 }
 
-body {
-  background: black;
-  color: white;
-  // min-height: 100vh;
-}
-
-#header {
-  display: flex;
-  justify-content: space-evenly;
-  h1 {
-    text-align: center;
-  }
   #logo {
     width: 3em;
     margin: 0.5em;
   }
+
   #refresh-db-btn {
     background: lightgray;
     border-radius: 25%;
@@ -52,34 +36,19 @@ body {
       }
     }
   }
-}
 
 .info-cont {
-  h2 {
-    text-align: center;
-    border: 2px solid lightgray;
-    span {
-      font-size: small;
-    }
     input[type="date"] {
       background: transparent;
       color: white;
       border: none;
-      text-align: center;
     }
     input[type="date"]::-webkit-calendar-picker-indicator {
       filter: invert(100%);
     }
   }
-}
 
 #count {
-  display: grid;
-  place-items: center;
-  grid-template-columns: repeat(4, 1fr);
-  grid-template-rows: repeat(7, 1fr);
-  grid-column-gap: 1px;
-  grid-row-gap: 2em;
   .high-count {
     color: darkgreen;
   }
@@ -91,53 +60,10 @@ body {
   }
   p {
     cursor: pointer;
-    width: fit-content;
   }
   span {
     color: white;
     cursor: default;
   }
-}
-
-#header,
-.info-cont > h2,
-#count {
-  user-select: none;
-}
-
-@media only screen and (min-width: 721px) {
-  #info-wrapper {
-    display: flex;
-    justify-content: space-evenly;
-  }
-
-  .info-cont {
-    width: 50%;
-    margin: 0.1em;
-    p {
-      font-size: small;
-    }
-  }
-
-  #recom {
-    display: grid;
-    place-items: center;
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: repeat(7, 1fr);
-    grid-column-gap: 1px;
-    grid-row-gap: 2em;
-  }
-}
-
-@media only screen and (max-width: 720px) {
-  #recom {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: repeat(11, 1fr);
-    grid-column-gap: 1px;
-    grid-row-gap: 2em;
-  }
-  p {
-    font-size: smaller;
-  }
-}
+} 
+// Nice 😏

@@ -39,11 +39,11 @@ app.get("/scrape", async (req, res) => {
     scrapedDraws.map((scrapedDraw) => {
       Draw.findOne({ key: scrapedDraw.key }, (err, output) => {
         output !== null ?
-          (output.key == scrapedDraw.key ? console.log("EXISTS!", scrapedDraw.key) : console.log()) :
-          (console.log(output, scrapedDraw.key), Draw.create(scrapedDraw), console.log("ADDED!", scrapedDraw.key));
+          (output.key == scrapedDraw.key ? console.log(scrapedDraw.key, "EXISTS!") : console.log()) :
+          (console.log(output, scrapedDraw.key), Draw.create(scrapedDraw), console.log(scrapedDraw.key, "ADDED!"));
       });
     });
-    res.json("Task Completed.");
+    res.json("Super 6 Tracker");
   } catch (e) {
     res.status(500).send(e);
   }
@@ -59,7 +59,7 @@ app.post('/api', (req, res) => {
 // Pull combinations from database & send to client.
 app.post('/api/combos', async (req, res) => {
   const recom = [];
-  result = Combination.aggregate([{$match: {combo: {$all: req.body.aThreshold}}}, {$sample: {size: 21}},]);
+  result = Combination.aggregate([{$match: {combo: {$all: req.body.aThreshold}}}, {$sample: {size: req.body.number}},]);
   for await (const doc of result) {
   recom.push(doc.combo);
   }

@@ -19,11 +19,12 @@ function dateRange(db) {
 function countNum(numArr) {
   const drawPicks = document.getElementById("count").querySelectorAll("p");
   const countThreshold = countSlider.value;
-  const occurrences = numArr.reduce(
-    (acc, e) => acc.set(e, (acc.get(e) || 0) + 1),
-    new Map()
-  );
+  const occurrences = numArr.reduce((acc, e) => acc.set(e, (acc.get(e) || 0) + 1), new Map());
   const [num, numCount] = [[...occurrences.keys()], [...occurrences.values()]];
+  const maxCount = numCount.reduce((a, c) => (a > c ? a : c));
+  // Change count slider limits based on max count.
+  countSlider.setAttribute("max", maxCount);
+  countSlider.nextElementSibling.innerText = ` ${maxCount}`;
   // Display the result in appropriate element.
   [...drawPicks].map((ball) => {
     const sliceB = num.findIndex((el) => el == ball.innerText.slice(0, 2));
@@ -40,31 +41,17 @@ function countNum(numArr) {
 function filterByFreq(unfilteredArr, unfilteredCount, threshold) {
   const aboveThreshold = [],
     belowThreshold = [];
-  unfilteredCount.map((el, i) =>
-    el >= threshold
-      ? aboveThreshold.push(unfilteredArr[i])
-      : belowThreshold.push(unfilteredArr[i])
-  );
+  unfilteredCount.map((el, i) => el >= threshold ? aboveThreshold.push(unfilteredArr[i]) : belowThreshold.push(unfilteredArr[i]));
   recomGen(aboveThreshold, belowThreshold);
 }
 
 // Display suggested draws based on threshold.
 function recomGen(aboveArray, belowArray) {
   aboveArray.length == 0
-    ? [...recomArr].map((el) => {
-        (el.innerText = ""), (el.innerText = "00,00,00,00,00,00");
-      })
+    ? [...recomArr].map((el) => {(el.innerText = ""), (el.innerText = "00,00,00,00,00,00")})
     : aboveArray.length > 5
-    ? [...recomArr].map((el) => {
-        el.innerText = "";
-        el.append(
-          aboveArray
-            .sort(() => Math.random() - Math.random())
-            .slice(0, 6)
-            .sort()
-        );
-      })
-    : findCombinations(aboveArray, belowArray);
+    ? [...recomArr].map((el) => {(el.innerText = "", el.append(aboveArray.sort(() => Math.random() - Math.random()).slice(0, 6).sort()))})
+    : findCombinations(aboveArray, belowArray, recomArr.length);
 }
 
 // Fetch draws within the specified range from the database.
@@ -80,51 +67,33 @@ async function filterDatabase(fromDate, toDate) {
   const data = await response.json();
   dateRange(data);
 }
-aDate.value.replace(/-/g, ""), bDate.value.replace(/-/g, "");
 
-async function findCombinations(aThreshold, bThreshold) {
+async function findCombinations(aThreshold, bThreshold, number) {
   const options = {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ aThreshold }),
+    body: JSON.stringify({ aThreshold, bThreshold, number }),
   };
   const response = await fetch("/api/combos", options);
   const data = await response.json();
-  [...recomArr].map((el, i) => {
-    (el.innerText = ""), el.append(data[i]);
-  });
+  [...recomArr].map((el, i) => {(el.innerText = ""), el.append(data[i])});
 }
 
 /***************************************Event Listeners***************************************/
 // Count Threshold Slider & Date Range Event Listeners
 [countSlider, aDate, bDate].forEach((item) => {
-  item.addEventListener("change", () => {
-    filterDatabase(
-      aDate.value.replace(/-/g, ""),
-      bDate.value.replace(/-/g, "")
-    );
-  });
+  item.addEventListener("change", () => filterDatabase(aDate.value.replace(/-/g, ""), bDate.value.replace(/-/g, "")));
 });
 
 // Refresh DB on page load.
 window.addEventListener("load", () => {
   const title = document.getElementById("title");
   title.textContent = "Scraping...";
-  fetch("/scrape")
-    .then((res) => res.json())
-    .then((data) => {
-      title.textContent = data;
-    });
-  setTimeout(() => {
-    title.textContent = "Super 6 Tracker";
-  }, 7000);
+  fetch("/scrape").then((res) => res.json()).then((data) => (title.textContent = data));
 });
 
 // Refresh Button Event Listener
-document.getElementById("refresh-db-btn").addEventListener("click", () => {
-  location.reload();
-});
-
+document.getElementById("refresh-db-btn").addEventListener("click", () => location.reload());
 /***************************************Test Code***************************************/

@@ -1,78 +1,46 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap");
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+* {
   font-family: "Poppins", cursive;
 }
 
-body {
-  background: black;
-  color: white;
-}
-
-#header {
-  display: flex;
-  justify-content: space-evenly;
-}
-#header h1 {
-  text-align: center;
-}
-#header #logo {
+#logo {
   width: 3em;
   margin: 0.5em;
 }
-#header #refresh-db-btn {
+
+#refresh-db-btn {
   background: lightgray;
   border-radius: 25%;
   padding: 0.5em;
   margin: 0.5em;
   height: 2.5em;
 }
-#header #refresh-db-btn img {
+#refresh-db-btn img {
   width: 1.5em;
   filter: invert(44%) sepia(97%) saturate(3%) hue-rotate(2deg) brightness(101%) contrast(99%);
 }
-#header #refresh-db-btn:hover, #header #refresh-db-btn:focus {
+#refresh-db-btn:hover, #refresh-db-btn:focus {
   transform: translateY(-0.25em);
 }
-#header #refresh-db-btn:hover img, #header #refresh-db-btn:focus img {
+#refresh-db-btn:hover img, #refresh-db-btn:focus img {
   filter: invert(100%) sepia(0%) saturate(7479%) hue-rotate(135deg) brightness(107%) contrast(106%);
 }
-#header #refresh-db-btn:active {
+#refresh-db-btn:active {
   transform: translateY(0.12em);
 }
-#header #refresh-db-btn:active img {
+#refresh-db-btn:active img {
   filter: invert(64%) sepia(0%) saturate(2030%) hue-rotate(3deg) brightness(110%) contrast(80%);
 }
 
-.info-cont h2 {
-  text-align: center;
-  border: 2px solid lightgray;
-}
-.info-cont h2 span {
-  font-size: small;
-}
-.info-cont h2 input[type=date] {
+.info-cont input[type=date] {
   background: transparent;
   color: white;
   border: none;
-  text-align: center;
 }
-.info-cont h2 input[type=date]::-webkit-calendar-picker-indicator {
+.info-cont input[type=date]::-webkit-calendar-picker-indicator {
   filter: invert(100%);
 }
 
-#count {
-  display: grid;
-  place-items: center;
-  grid-template-columns: repeat(4, 1fr);
-  grid-template-rows: repeat(7, 1fr);
-  grid-column-gap: 1px;
-  grid-row-gap: 2em;
-}
 #count .high-count {
   color: darkgreen;
 }
@@ -84,54 +52,8 @@ body {
 }
 #count p {
   cursor: pointer;
-  width: -webkit-fit-content;
-  width: -moz-fit-content;
-  width: fit-content;
 }
 #count span {
   color: white;
   cursor: default;
-}
-
-#header,
-.info-cont > h2,
-#count {
-  -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
-}
-
-@media only screen and (min-width: 721px) {
-  #info-wrapper {
-    display: flex;
-    justify-content: space-evenly;
-  }
-  .info-cont {
-    width: 50%;
-    margin: 0.1em;
-  }
-  .info-cont p {
-    font-size: small;
-  }
-  #recom {
-    display: grid;
-    place-items: center;
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: repeat(7, 1fr);
-    grid-column-gap: 1px;
-    grid-row-gap: 2em;
-  }
-}
-@media only screen and (max-width: 720px) {
-  #recom {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: repeat(11, 1fr);
-    grid-column-gap: 1px;
-    grid-row-gap: 2em;
-  }
-  p {
-    font-size: smaller;
-  }
 }/*# sourceMappingURL=style.css.map */
