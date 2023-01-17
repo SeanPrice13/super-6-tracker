@@ -26,23 +26,23 @@ app.get("/scrape", async (req, res) => {
     browser.close();
     // Format the scraped data into individual draws and push to scrapedDraws array.
     const scrapedDraws = [];
-    const rawFilteredData = JSON.parse(el).content.rendered.slice(JSON.parse(el).content.rendered.indexOf("<table><thead>")).toString().replace(/(<([^>]+)>)/gi, "").replace("DateMidday#Draw ID", "").replace(/[,-\s]/g, "").match(/.{1,24}/g);
+    const rawFilteredData = JSON.parse(el).content.rendered.slice(JSON.parse(el).content.rendered.indexOf("<table><thead>")).toString().replace(/(<([^>]+)>)/gi, "").replace("DateWinning NumbersLetterDraw ID", "").replace(/[,-\s]/g, "").match(/.{1,25}/g);
     rawFilteredData.map((drawRow) => {
       scrapedDraws.push({
         date: drawRow.slice(0, 8),
         draw: drawRow.slice(8, 20).match(/.{1,2}/g),
-        // letter: drawRow.slice(20, 21), Removed due to it's removal from the NLA source.
-        key: drawRow.slice(20, 24),
+        letter: drawRow.slice(20, 21),
+        key: drawRow.slice(21),
       });
     });
     // Check database for each recent draw & add to database if not found.
-    scrapedDraws.map((scrapedDraw) => {
-      Draw.findOne({ key: scrapedDraw.key }, (err, output) => {
-        output !== null ?
-          (output.key == scrapedDraw.key ? console.log(scrapedDraw.key, "EXISTS!") : console.log()) :
-          (console.log(output, scrapedDraw.key), Draw.create(scrapedDraw), console.log(scrapedDraw.key, "ADDED!"));
-      });
-    });
+    // scrapedDraws.map((scrapedDraw) => {
+    //   Draw.findOne({ key: scrapedDraw.key }, (err, output) => {
+    //     output !== null ?
+    //       (output.key == scrapedDraw.key ? console.log(scrapedDraw.key, "EXISTS!") : console.log()) :
+    //       (console.log(output, scrapedDraw.key), Draw.create(scrapedDraw), console.log(scrapedDraw.key, "ADDED!"));
+    //   });
+    // });
     res.json("Super 6 Tracker");
   } catch (e) {
     res.status(500).send(e);
