@@ -36,13 +36,13 @@ app.get("/scrape", async (req, res) => {
       });
     });
     // Check database for each recent draw & add to database if not found.
-    // scrapedDraws.map((scrapedDraw) => {
-    //   Draw.findOne({ key: scrapedDraw.key }, (err, output) => {
-    //     output !== null ?
-    //       (output.key == scrapedDraw.key ? console.log(scrapedDraw.key, "EXISTS!") : console.log()) :
-    //       (console.log(output, scrapedDraw.key), Draw.create(scrapedDraw), console.log(scrapedDraw.key, "ADDED!"));
-    //   });
-    // });
+    scrapedDraws.map((scrapedDraw) => {
+      Draw.findOne({ key: scrapedDraw.key }, (err, output) => {
+        output !== null ?
+          (output.key == scrapedDraw.key ? console.log(scrapedDraw.key, "EXISTS!") : console.log()) :
+          (console.log(output, scrapedDraw.key), Draw.create(scrapedDraw), console.log(scrapedDraw.key, "ADDED!"));
+      });
+    });
     res.json("Super 6 Tracker");
   } catch (e) {
     res.status(500).send(e);
