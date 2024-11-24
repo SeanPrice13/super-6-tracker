@@ -97,3 +97,9 @@ window.addEventListener("load", () => {
 // Refresh Button Event Listener
 document.getElementById("refresh-db-btn").addEventListener("click", () => location.reload());
 /***************************************Test Code***************************************/
+// Favorite Numbers
+[document.getElementById("count").querySelectorAll("p")].forEach((fave) => {
+  fave.addEventListener("click", () => {
+    fave.classList = "faves" ? fave.classList.remove("faves") : fave.classList.add("faves")
+  })
+})
