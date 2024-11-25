@@ -2,7 +2,7 @@ const countSlider = document.getElementById("count-slider"),
   aDate = document.getElementById("start-date"),
   bDate = document.getElementById("end-date"),
   recomArray = document.getElementById("recom").querySelectorAll("p"),
-  favorites = [...document.getElementsByClassName("faves")];
+  favorites = document.getElementsByClassName("faves");
 
 // Get draws from 02/08/2022 to current date on page load.
 bDate.value = new Date().toISOString().slice(0, 10);
@@ -49,7 +49,7 @@ function filterByFreq(unfilteredArray, unfilteredCount, threshold) {
 // Display suggested draws based on threshold and favorites.
 function recomGen(aboveArray, belowArray) {
   const favesArray = [];
-  favorites.forEach(fave => {favesArray.push(fave.innerText.slice(0, 2))})
+  [...favorites].forEach(fave => {favesArray.push(fave.innerText.slice(0, 2))})
   aboveArray.length == 0 && favesArray.length == 0
     ? [...recomArray].map((el) => {(el.innerText = ""), (el.innerText = "00,00,00,00,00,00");})
     : favesArray.length >= 6 
