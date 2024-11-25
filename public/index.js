@@ -54,7 +54,7 @@ function recomGen(aboveArray, belowArray) {
     ? [...recomArray].map((el) => {(el.innerText = ""), (el.innerText = "00,00,00,00,00,00");})
     : favesArray.length >= 6 
       ? [...recomArray].map((el) => {(el.innerText = "", el.append(favesArray.sort(() => Math.random() - Math.random()).slice(0, 6).sort()))})
-      : aboveArray.length >= 6
+      : aboveArray.length >= 6 && favesArray.length == 0
       ? [...recomArray].map((el) => {(el.innerText = "", el.append(aboveArray.sort(() => Math.random() - Math.random()).slice(0, 6).sort()))})
       : findCombinations(aboveArray, belowArray, favesArray, recomArray.length)
 }
