@@ -52,17 +52,11 @@ function recomGen(aboveArray, belowArray) {
   favorites.forEach(fave => {favesArray.push(fave.innerText.slice(0, 2))})
   aboveArray.length == 0 && favesArray.length == 0
     ? [...recomArray].map((el) => {(el.innerText = ""), (el.innerText = "00,00,00,00,00,00");})
-    : 
-  aboveArray.length <= 5 && favesArray.length >= 1 || favesArray.length <= 5 && aboveArray.length >= 1
-    ? [...recomArray].map((el) => {el.innerText = "", el.append([...new Set([...favesArray, ...aboveArray.sort(() => Math.random() - Math.random()).slice(0, (6-favesArray.length)).sort()])])})
-    :
-  aboveArray.length > 5 && favesArray.length == 0
-    ? [...recomArray].map((el) => {(el.innerText = "", el.append(aboveArray.sort(() => Math.random() - Math.random()).slice(0, 6).sort()))})
-    : 
-  aboveArray.length == 0 && favesArray.length > 5 
-    ? [...recomArray].map((el) => {(el.innerText = "", el.append(favesArray.sort(() => Math.random() - Math.random()).slice(0, 6).sort()))})
-    : 
-  findCombinations(aboveArray, belowArray, favesArray, recomArray.length);
+    : favesArray.length >= 6 
+      ? [...recomArray].map((el) => {(el.innerText = "", el.append(favesArray.sort(() => Math.random() - Math.random()).slice(0, 6).sort()))})
+      : aboveArray.length >= 6
+      ? [...recomArray].map((el) => {(el.innerText = "", el.append(aboveArray.sort(() => Math.random() - Math.random()).slice(0, 6).sort()))})
+      : findCombinations(aboveArray, belowArray, favesArray, recomArray.length)
 }
 
 // Fetch draws within the specified range from the database.
