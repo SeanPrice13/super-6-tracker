@@ -1,7 +1,8 @@
 const countSlider = document.getElementById("count-slider"),
   aDate = document.getElementById("start-date"),
   bDate = document.getElementById("end-date"),
-  recomArray = document.getElementById("recom").querySelectorAll("p");
+  recomArray = document.getElementById("recom").querySelectorAll("p"),
+  favorites = [...document.getElementsByClassName("faves")];
 
 // Get draws from 02/08/2022 to current date on page load.
 bDate.value = new Date().toISOString().slice(0, 10);
@@ -47,8 +48,7 @@ function filterByFreq(unfilteredArray, unfilteredCount, threshold) {
 
 // Display suggested draws based on threshold and favorites.
 function recomGen(aboveArray, belowArray) {
-  const favorites = [...document.getElementsByClassName("faves")],
-    favesArray = [];
+  const favesArray = [];
   favorites.forEach(fave => {favesArray.push(fave.innerText.slice(0, 2))})
   aboveArray.length == 0 && favesArray.length == 0
     ? [...recomArray].map((el) => {(el.innerText = ""), (el.innerText = "00,00,00,00,00,00");})
@@ -92,6 +92,11 @@ async function findCombinations(aThreshold, bThreshold, faves, number) {
   item.addEventListener("change", () => filterDatabase(aDate.value.replace(/-/g, ""), bDate.value.replace(/-/g, "")));
 });
 
+// Favorite Numbers Event Listener
+document.getElementById("count").querySelectorAll("p").forEach((fave) => {
+  fave.addEventListener("click", () => (fave.classList.toggle("faves"), filterDatabase(aDate.value.replace(/-/g, ""), bDate.value.replace(/-/g, ""))))
+})
+
 // Refresh DB on page load.
 window.addEventListener("load", () => {
   const title = document.getElementById("title");
@@ -102,7 +107,3 @@ window.addEventListener("load", () => {
 // Refresh Button Event Listener
 document.getElementById("refresh-db-btn").addEventListener("click", () => location.reload());
 /***************************************Test Code***************************************/
-// Favorite Numbers
-document.getElementById("count").querySelectorAll("p").forEach((fave) => {
-  fave.addEventListener("click", () => (fave.classList == "faves" ? fave.classList.remove("faves") : fave.classList.add("faves")))
-})
