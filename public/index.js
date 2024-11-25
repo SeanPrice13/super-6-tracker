@@ -1,7 +1,7 @@
 const countSlider = document.getElementById("count-slider"),
   aDate = document.getElementById("start-date"),
   bDate = document.getElementById("end-date"),
-  recomArr = document.getElementById("recom").querySelectorAll("p");
+  recomArray = document.getElementById("recom").querySelectorAll("p");
 
 // Get draws from 02/08/2022 to current date on page load.
 bDate.value = new Date().toISOString().slice(0, 10);
@@ -10,9 +10,9 @@ filterDatabase(aDate.value.replace(/-/g, ""), bDate.value.replace(/-/g, ""));
 /***************************************FUNCTIONS***************************************/
 // Extract draw numbers and add to a new array for counting.
 function dateRange(db) {
-  const dateRangeArr = [];
-  db.map((drawRow) => drawRow.draw.map((num) => dateRangeArr.push(num)));
-  countNum(dateRangeArr);
+  const dateRangeArray = [];
+  db.map((drawRow) => drawRow.draw.map((num) => dateRangeArray.push(num)));
+  countNum(dateRangeArray);
 }
 
 // Count the amount of times a number was drawn & store in a list.
@@ -38,20 +38,31 @@ function countNum(numArr) {
 }
 
 // Filter numbers based on count threshold.
-function filterByFreq(unfilteredArr, unfilteredCount, threshold) {
+function filterByFreq(unfilteredArray, unfilteredCount, threshold) {
   const aboveThreshold = [],
     belowThreshold = [];
-  unfilteredCount.map((el, i) => el >= threshold ? aboveThreshold.push(unfilteredArr[i]) : belowThreshold.push(unfilteredArr[i]));
+  unfilteredCount.map((el, i) => el >= threshold ? aboveThreshold.push(unfilteredArray[i]) : belowThreshold.push(unfilteredArray[i]));
   recomGen(aboveThreshold, belowThreshold);
 }
 
-// Display suggested draws based on threshold.
+// Display suggested draws based on threshold and favorites.
 function recomGen(aboveArray, belowArray) {
-  aboveArray.length == 0
-    ? [...recomArr].map((el) => {(el.innerText = ""), (el.innerText = "00,00,00,00,00,00")})
-    : aboveArray.length > 5
-    ? [...recomArr].map((el) => {(el.innerText = "", el.append(aboveArray.sort(() => Math.random() - Math.random()).slice(0, 6).sort()))})
-    : findCombinations(aboveArray, belowArray, recomArr.length);
+  const favorites = [...document.getElementsByClassName("faves")],
+    favesArray = [];
+  favorites.forEach(fave => {favesArray.push(fave.innerText.slice(0, 2))})
+  aboveArray.length == 0 && favesArray.length == 0
+    ? [...recomArray].map((el) => {(el.innerText = ""), (el.innerText = "00,00,00,00,00,00");})
+    : 
+  aboveArray.length <= 5 && favesArray.length >= 1 || favesArray.length <= 5 && aboveArray.length >= 1
+    ? [...recomArray].map((el) => {el.innerText = "", el.append([...new Set([...favesArray, ...aboveArray.sort(() => Math.random() - Math.random()).slice(0, (6-favesArray.length)).sort()])])})
+    :
+  aboveArray.length > 5 && favesArray.length == 0
+    ? [...recomArray].map((el) => {(el.innerText = "", el.append(aboveArray.sort(() => Math.random() - Math.random()).slice(0, 6).sort()))})
+    : 
+  aboveArray.length == 0 && favesArray.length > 5 
+    ? [...recomArray].map((el) => {(el.innerText = "", el.append(favesArray.sort(() => Math.random() - Math.random()).slice(0, 6).sort()))})
+    : 
+  findCombinations(aboveArray, belowArray, favesArray, recomArray.length);
 }
 
 // Fetch draws within the specified range from the database.
@@ -68,17 +79,17 @@ async function filterDatabase(fromDate, toDate) {
   dateRange(data);
 }
 
-async function findCombinations(aThreshold, bThreshold, number) {
+async function findCombinations(aThreshold, bThreshold, faves, number) {
   const options = {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ aThreshold, bThreshold, number }),
+    body: JSON.stringify({ aThreshold, bThreshold, faves, number }),
   };
   const response = await fetch("/api/combos", options);
   const data = await response.json();
-  [...recomArr].map((el, i) => {(el.innerText = ""), el.append(data[i])});
+  [...recomArray].map((el, i) => {(el.innerText = ""), el.append(data[i])});
 }
 
 /***************************************Event Listeners***************************************/
@@ -98,8 +109,6 @@ window.addEventListener("load", () => {
 document.getElementById("refresh-db-btn").addEventListener("click", () => location.reload());
 /***************************************Test Code***************************************/
 // Favorite Numbers
-[document.getElementById("count").querySelectorAll("p")].forEach((fave) => {
-  fave.addEventListener("click", () => {
-    fave.classList = "faves" ? fave.classList.remove("faves") : fave.classList.add("faves")
-  })
+document.getElementById("count").querySelectorAll("p").forEach((fave) => {
+  fave.addEventListener("click", () => (fave.classList == "faves" ? fave.classList.remove("faves") : fave.classList.add("faves")))
 })
