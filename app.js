@@ -59,7 +59,7 @@ app.post('/api', (req, res) => {
 // Pull combinations from database & send to client.
 app.post('/api/combos', async (req, res) => {
   const recom = [];
-  req.body.faves. length == 0 ? result = Combination.aggregate([{$match: {combo: {$all: req.body.aThreshold}}}]) : result = Combination.aggregate([{$match: {$and: [{combo: {$all: req.body.faves}}, {combo: {$in: req.body.aThreshold}}]}}])
+  req.body.faves. length == 0 ? result = Combination.aggregate([{$match: {combo: {$all: req.body.aThreshold}}}, {$sample: {size: req.body.number}}]) : result = Combination.aggregate([{$match: {$and: [{combo: {$all: req.body.faves}}, {combo: {$in: req.body.aThreshold}}]}}, {$sample: {size: req.body.number}}])
   for await (const doc of result) {
     recom.push(doc.combo);
   }
