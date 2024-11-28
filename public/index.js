@@ -55,8 +55,8 @@ function recomGen(aboveArray, belowArray) {
     : favesArray.length >= 6 
       ? [...recomArray].map((el) => {(el.innerText = "", el.append(favesArray.sort(() => Math.random() - Math.random()).slice(0, 6).sort()))})
       : aboveArray.length >= 6 && favesArray.length == 0
-      ? [...recomArray].map((el) => {(el.innerText = "", el.append(aboveArray.sort(() => Math.random() - Math.random()).slice(0, 6).sort()))})
-      : findCombinations(aboveArray, belowArray, favesArray, recomArray.length)
+        ? [...recomArray].map((el) => {(el.innerText = "", el.append(aboveArray.sort(() => Math.random() - Math.random()).slice(0, 6).sort()))})
+        : findCombinations(aboveArray, belowArray, favesArray, recomArray.length)
 }
 
 // Fetch draws within the specified range from the database.
